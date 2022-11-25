@@ -35,5 +35,5 @@ cp "WORKSPACE" "WORKSPACE.bak"
 ./kokoro/testutils/replace_http_archive_with_local_repository.py \
   -f "WORKSPACE" -t "${TINK_BASE_DIR}"
 # TODO(b/155060426): Add more targets when working.
-bazel build -- //Tink:aead //Tink/util/... //Tink/proto_redirect/... //Tink:key_template
+bazel build -- //Tink:aead //Tink/util/... //Tink/proto_redirect/... //Tink:key_template //Tink:signature_key_template
 mv "WORKSPACE.bak" "WORKSPACE"
