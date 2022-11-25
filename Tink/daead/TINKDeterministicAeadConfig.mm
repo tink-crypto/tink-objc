@@ -20,7 +20,6 @@
 
 #include "tink/daead/deterministic_aead_config.h"
 #include "tink/util/status.h"
-#include "proto/config.pb.h"
 
 #import "Tink/TINKRegistryConfig.h"
 #import "Tink/util/TINKErrors.h"

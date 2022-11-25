@@ -19,7 +19,6 @@
 #import "Tink/TINKAllConfig.h"
 
 #include "tink/config/tink_config.h"
-#include "proto/config.pb.h"
 
 #import <Foundation/Foundation.h>
 

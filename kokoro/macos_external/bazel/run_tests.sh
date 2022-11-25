@@ -34,6 +34,6 @@ readonly GITHUB_ORG="https://github.com/tink-crypto"
 cp "WORKSPACE" "WORKSPACE.bak"
 ./kokoro/testutils/replace_http_archive_with_local_repository.py \
   -f "WORKSPACE" -t "${TINK_BASE_DIR}"
-# TODO(b/155060426): Add more targets when working.
-bazel build -- //Tink:aead //Tink/util/... //Tink/proto_redirect/... //Tink:key_template //Tink:signature_key_template
+# TODO(b/155060426): Build more, run tests
+bazel build --build_tag_filters=-do_not_build_b155060426 -- //Tink/...
 mv "WORKSPACE.bak" "WORKSPACE"
