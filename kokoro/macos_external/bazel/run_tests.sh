@@ -16,11 +16,16 @@
 
 set -euo pipefail
 
+BAZEL_CMD="bazel"
+if command -v "bazelisk" &> /dev/null; then
+  BAZEL_CMD="bazelisk"
+fi
+readonly BAZEL_CMD
+
 # If we are running on Kokoro cd into the repository.
 if [[ -n "${KOKORO_ROOT:-}" ]]; then
   TINK_BASE_DIR="$(echo "${KOKORO_ARTIFACTS_DIR}"/git*)"
   cd "${TINK_BASE_DIR}/tink_objc"
-  use_bazel.sh "$(cat .bazelversion)"
 fi
 
 : "${TINK_BASE_DIR:=$(cd .. && pwd)}"
@@ -35,5 +40,5 @@ cp "WORKSPACE" "WORKSPACE.bak"
 ./kokoro/testutils/replace_http_archive_with_local_repository.py \
   -f "WORKSPACE" -t "${TINK_BASE_DIR}"
 # TODO(b/155060426): Build more, run tests
-bazel build --build_tag_filters=-do_not_build_b155060426 -- //Tink/...
+"${BAZEL_CMD}" build --build_tag_filters=-do_not_build_b155060426 -- //Tink/...
 mv "WORKSPACE.bak" "WORKSPACE"
