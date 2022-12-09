@@ -19,6 +19,10 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
+#include <memory>
+#include <string>
+#include <utility>
+
 #import "Tink/TINKBinaryKeysetReader.h"
 #import "Tink/TINKKeysetHandle+Cleartext.h"
 #import "Tink/TINKKeysetHandle.h"
