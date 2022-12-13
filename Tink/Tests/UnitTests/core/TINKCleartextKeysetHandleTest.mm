@@ -35,7 +35,7 @@
 #include "tink/util/secret_data.h"
 #include "tink/util/statusor.h"
 #include "tink/util/test_util.h"
-#include "proto/tink.pb.h"
+#include "Tink/proto_redirect/tink_cc_pb_redirect.h"
 
 using ::crypto::tink::InsecureSecretKeyAccess;
 using ::crypto::tink::SerializeKeysetToProtoKeysetFormat;
