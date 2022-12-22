@@ -39,9 +39,8 @@ readonly GITHUB_ORG="https://github.com/tink-crypto"
 cp "WORKSPACE" "WORKSPACE.bak"
 ./kokoro/testutils/replace_http_archive_with_local_repository.py \
   -f "WORKSPACE" -t "${TINK_BASE_DIR}"
-"${BAZEL_CMD}" build --build_tag_filters=-do_not_build_b155060426 -- //Tink/...
+"${BAZEL_CMD}" build -- //Tink/...
 "${BAZEL_CMD}" test \
-  --build_tag_filters=-do_not_build_b155060426 \
   --test_output=errors \
   -- //Tink/...
 mv "WORKSPACE.bak" "WORKSPACE"
