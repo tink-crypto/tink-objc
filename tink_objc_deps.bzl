@@ -4,6 +4,13 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def tink_objc_deps():
     """Dependencies for Tink Objective C."""
+    if not native.existing_rule("tink_cc"):
+        # Main
+        http_archive(
+            name = "tink_cc",
+            urls = ["https://github.com/tink-crypto/tink-cc/archive/main.zip"],
+            strip_prefix = "tink-cc-main",
+        )
     if not native.existing_rule("build_bazel_rules_apple"):
         # Release from 2022-12-21.
         http_archive(

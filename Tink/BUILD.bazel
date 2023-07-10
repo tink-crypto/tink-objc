@@ -83,9 +83,23 @@ PUBLIC_API_DEPS = [
     "//Tink/util:strings",
 ]
 
+filegroup(
+    name = "public_headers",
+    srcs = PUBLIC_APIS,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "cleartext_headers",
+    srcs = [
+        "TINKKeysetHandle+Cleartext.h",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 objc_library(
     name = "objc",
-    hdrs = PUBLIC_APIS,
+    hdrs = [":public_headers"],
     visibility = ["//visibility:public"],
     deps = PUBLIC_API_DEPS,
 )
@@ -93,7 +107,8 @@ objc_library(
 objc_library(
     name = "testonly",
     testonly = 1,
-    hdrs = PUBLIC_APIS + [
+    hdrs = [
+        ":public_headers",
         "TINKKeysetHandle+Cleartext.h",
     ],
     visibility = ["//visibility:public"],
@@ -104,7 +119,8 @@ objc_library(
 
 ios_static_framework(
     name = "Tink_framework",
-    hdrs = PUBLIC_APIS + [
+    hdrs = [
+        ":public_headers",
         "TINKKeysetHandle+Cleartext.h",
     ],
     bundle_name = "Tink",
@@ -112,6 +128,20 @@ ios_static_framework(
     deps = [
         ":cleartext_keyset_handle",
         ":objc",
+    ],
+)
+
+objc_library(
+    name = "cleartext_keyset_handle",
+    srcs = ["core/TINKKeysetHandle+Cleartext.mm"],
+    hdrs = [":cleartext_headers"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//Tink:keyset_handle",
+        "//Tink:keyset_reader",
+        "//Tink/proto_redirect:tink_cc_pb_redirect",
+        "//Tink/util:errors",
+        "@tink_cc//tink:cleartext_keyset_handle",
     ],
 )
 
@@ -148,21 +178,6 @@ objc_library(
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",
         "@tink_cc//tink:binary_keyset_reader",
-    ],
-)
-
-objc_library(
-    name = "cleartext_keyset_handle",
-    srcs = ["core/TINKKeysetHandle+Cleartext.mm"],
-    hdrs = [
-        "TINKKeysetHandle+Cleartext.h",
-    ],
-    deps = [
-        "//Tink:keyset_handle",
-        "//Tink:keyset_reader",
-        "//Tink/proto_redirect:tink_cc_pb_redirect",
-        "//Tink/util:errors",
-        "@tink_cc//tink:cleartext_keyset_handle",
     ],
 )
 
