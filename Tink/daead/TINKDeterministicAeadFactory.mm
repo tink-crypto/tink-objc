@@ -26,6 +26,7 @@
 #import "Tink/daead/TINKDeterministicAeadInternal.h"
 #import "Tink/util/TINKErrors.h"
 
+#include "tink/config/global_registry.h"
 #include "tink/keyset_handle.h"
 #include "tink/util/status.h"
 
@@ -34,7 +35,8 @@
 + (id<TINKDeterministicAead>)primitiveWithKeysetHandle:(TINKKeysetHandle *)keysetHandle
                                                  error:(NSError **)error {
   crypto::tink::KeysetHandle *handle = [keysetHandle ccKeysetHandle];
-  auto st = handle->GetPrimitive<crypto::tink::DeterministicAead>();
+  auto st =
+      handle->GetPrimitive<crypto::tink::DeterministicAead>(crypto::tink::ConfigGlobalRegistry());
 
   if (!st.ok()) {
     if (error) {

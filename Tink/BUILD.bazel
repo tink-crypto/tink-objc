@@ -1,7 +1,7 @@
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_static_framework", "ios_unit_test")
 load("//:minimum_os.bzl", "IOS_MINIMUM_OS")
-load("//:tink_version.bzl", "TINK_VERSION_LABEL")
 load("//:template_rule.bzl", "template_rule")
+load("//:tink_version.bzl", "TINK_VERSION_LABEL")
 
 licenses(["notice"])
 
@@ -328,6 +328,7 @@ objc_library(
         ":keyset_handle",
         "//Tink/util:errors",
         "@tink_cc//tink:keyset_handle",
+        "@tink_cc//tink/config:global_registry",
         "@tink_cc//tink/util:status",
     ],
 )
@@ -394,6 +395,7 @@ objc_library(
         ":keyset_handle",
         "//Tink/util:errors",
         "@tink_cc//tink:keyset_handle",
+        "@tink_cc//tink/config:global_registry",
         "@tink_cc//tink/util:status",
     ],
 )
@@ -443,6 +445,7 @@ objc_library(
         ":keyset_handle",
         "//Tink/util:errors",
         "@tink_cc//tink:keyset_handle",
+        "@tink_cc//tink/config:global_registry",
         "@tink_cc//tink/util:status",
     ],
 )
@@ -471,6 +474,7 @@ objc_library(
         ":keyset_handle",
         "//Tink/util:errors",
         "@tink_cc//tink:keyset_handle",
+        "@tink_cc//tink/config:global_registry",
         "@tink_cc//tink/util:status",
     ],
 )
@@ -552,6 +556,7 @@ objc_library(
         "//Tink:mac_internal",
         "//Tink/util:errors",
         "@tink_cc//tink:keyset_handle",
+        "@tink_cc//tink/config:global_registry",
         "@tink_cc//tink/util:status",
     ],
 )
@@ -667,6 +672,7 @@ objc_library(
         ":public_key_sign_internal",
         "//Tink/util:errors",
         "@tink_cc//tink:keyset_handle",
+        "@tink_cc//tink/config:global_registry",
         "@tink_cc//tink/util:status",
     ],
 )
@@ -682,6 +688,7 @@ objc_library(
         ":public_key_verify_internal",
         "//Tink/util:errors",
         "@tink_cc//tink:keyset_handle",
+        "@tink_cc//tink/config:global_registry",
         "@tink_cc//tink/util:status",
     ],
 )

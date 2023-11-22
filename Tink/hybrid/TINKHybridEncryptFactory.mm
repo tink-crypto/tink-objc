@@ -26,6 +26,7 @@
 #import "Tink/hybrid/TINKHybridEncryptInternal.h"
 #import "Tink/util/TINKErrors.h"
 
+#include "tink/config/global_registry.h"
 #include "tink/keyset_handle.h"
 #include "tink/util/status.h"
 
@@ -35,7 +36,7 @@
                                              error:(NSError **)error {
   crypto::tink::KeysetHandle *handle = [keysetHandle ccKeysetHandle];
 
-  auto st = handle->GetPrimitive<crypto::tink::HybridEncrypt>();
+  auto st = handle->GetPrimitive<crypto::tink::HybridEncrypt>(crypto::tink::ConfigGlobalRegistry());
   if (!st.ok()) {
     if (error) {
       *error = TINKStatusToError(st.status());
