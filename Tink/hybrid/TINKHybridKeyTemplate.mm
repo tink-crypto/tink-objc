@@ -41,6 +41,10 @@
       ccKeyTemplate = const_cast<google::crypto::tink::KeyTemplate *>(
           &crypto::tink::HybridKeyTemplates::EciesP256HkdfHmacSha256Aes128CtrHmacSha256());
       break;
+    case TINKHpkeX25519HkdfSha256Aes256Gcm:
+      ccKeyTemplate = const_cast<google::crypto::tink::KeyTemplate *>(
+          &crypto::tink::HybridKeyTemplates::HpkeX25519HkdfSha256Aes256Gcm());
+      break;
     default:
       if (error) {
         *error = TINKStatusToError(crypto::tink::util::Status(

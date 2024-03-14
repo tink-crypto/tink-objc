@@ -19,6 +19,7 @@
 #import "Tink/TINKAllConfig.h"
 
 #include "tink/config/tink_config.h"
+#include "tink/hybrid/hpke_config.h"
 
 #import <Foundation/Foundation.h>
 
@@ -31,6 +32,13 @@
 
 - (nullable instancetype)initWithError:(NSError **)error {
   auto st = crypto::tink::TinkConfig::Register();
+  if (!st.ok()) {
+    if (error) {
+      *error = TINKStatusToError(st);
+    }
+    return nil;
+  }
+  st = crypto::tink::RegisterHpke();
   if (!st.ok()) {
     if (error) {
       *error = TINKStatusToError(st);

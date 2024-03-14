@@ -130,6 +130,7 @@ objc_library(
         "//Tink:registry_config",
         "//Tink/util:errors",
         "@tink_cc//tink/config:tink_config",
+        "@tink_cc//tink/hybrid:hpke_config",
     ],
 )
 
@@ -501,6 +502,7 @@ objc_library(
         ":registry_config",
         "//Tink/util:errors",
         "//Tink/util:strings",
+        "@tink_cc//tink/hybrid:hpke_config",
         "@tink_cc//tink/hybrid:hybrid_config",
     ],
 )

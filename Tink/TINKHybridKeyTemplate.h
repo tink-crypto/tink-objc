@@ -42,6 +42,16 @@ typedef NS_ENUM(NSInteger, TINKHybridKeyTemplates) {
    *   OutputPrefixType: TINK
    */
   TINKEciesP256HkdfHmacSha256Aes128CtrHmacSha256 = 2,
+
+  /**
+   * Returns a KeyTemplate that generates new instances of
+   * HpkePrivateKey with the following parameters:
+   *   - KEM: ECDH over Curve25519 plus HKDF-SHA256
+   *   - KDF: HKDF-SHA256
+   *   - AEAD: AES-256-GCM
+   *   - OutputPrefixType: TINK
+   */
+  TINKHpkeX25519HkdfSha256Aes256Gcm = 3,
 };
 
 NS_ASSUME_NONNULL_BEGIN

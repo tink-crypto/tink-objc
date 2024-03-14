@@ -36,8 +36,9 @@
 @interface TINKHybridKeyTemplateTest : XCTestCase
 @end
 
-static std::string const kTypeURL =
+static std::string const kEciesTypeURL =
     "type.googleapis.com/google.crypto.tink.EciesAeadHkdfPrivateKey";
+static std::string const kHpkeTypeURL = "type.googleapis.com/google.crypto.tink.HpkePrivateKey";
 
 @implementation TINKHybridKeyTemplateTest
 
@@ -63,7 +64,7 @@ static std::string const kTypeURL =
   XCTAssertNil(error);
   XCTAssertNotNil(keyTemplate);
 
-  XCTAssertTrue(keyTemplate.ccKeyTemplate->type_url() == kTypeURL);
+  XCTAssertTrue(keyTemplate.ccKeyTemplate->type_url() == kEciesTypeURL);
   XCTAssertTrue(keyTemplate.ccKeyTemplate->output_prefix_type() ==
                 google::crypto::tink::OutputPrefixType::TINK);
 }
@@ -77,7 +78,21 @@ static std::string const kTypeURL =
   XCTAssertNil(error);
   XCTAssertNotNil(keyTemplate);
 
-  XCTAssertTrue(keyTemplate.ccKeyTemplate->type_url() == kTypeURL);
+  XCTAssertTrue(keyTemplate.ccKeyTemplate->type_url() == kEciesTypeURL);
+  XCTAssertTrue(keyTemplate.ccKeyTemplate->output_prefix_type() ==
+                google::crypto::tink::OutputPrefixType::TINK);
+}
+
+- (void)testHpkeX25519HkdfSha256Aes256Gcm {
+  // Get a HpkeX25519HkdfSha256Aes256Gcm key template.
+  NSError *error = nil;
+  TINKHybridKeyTemplate *keyTemplate =
+      [[TINKHybridKeyTemplate alloc] initWithKeyTemplate:TINKHpkeX25519HkdfSha256Aes256Gcm
+                                                   error:&error];
+  XCTAssertNil(error);
+  XCTAssertNotNil(keyTemplate);
+
+  XCTAssertTrue(keyTemplate.ccKeyTemplate->type_url() == kHpkeTypeURL);
   XCTAssertTrue(keyTemplate.ccKeyTemplate->output_prefix_type() ==
                 google::crypto::tink::OutputPrefixType::TINK);
 }
