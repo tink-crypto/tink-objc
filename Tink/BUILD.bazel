@@ -1,4 +1,10 @@
-load("@build_bazel_rules_apple//apple:ios.bzl", "ios_static_framework", "ios_unit_test")
+load(
+    "@build_bazel_rules_apple//apple:ios.bzl",
+    "ios_application",
+    "ios_build_test",
+    "ios_static_framework",
+    "ios_unit_test",
+)
 load("//:minimum_os.bzl", "IOS_MINIMUM_OS")
 load("//:template_rule.bzl", "template_rule")
 load("//:tink_version.bzl", "TINK_VERSION_LABEL")
@@ -702,9 +708,41 @@ objc_library(
 ios_unit_test(
     name = "TinkTests",
     minimum_os_version = IOS_MINIMUM_OS,
+    test_host = "TinkUnitTestsHost",
     deps = [
         ":UnitTestLib",
     ],
+)
+
+ios_application(
+    name = "TinkUnitTestsHost",
+    testonly = 1,
+    bundle_id = "com.google.TinkUnitTestsHost",
+    families = ["iphone"],
+    infoplists = ["Tests/Info.plist"],
+    minimum_os_version = IOS_MINIMUM_OS,
+    provisioning_profile = "Tests/integration_testing_ios.mobileprovision",
+    deps = [":TinkUnitTestsHostLib"],
+)
+
+ios_build_test(
+    name = "TinkUnitTestHostLibBuildTest",
+    minimum_os_version = IOS_MINIMUM_OS,
+    targets = [
+        ":TinkUnitTestsHostLib",
+    ],
+)
+
+objc_library(
+    name = "TinkUnitTestsHostLib",
+    testonly = 1,
+    srcs = glob(["Tests/Host/*.m"]),
+    hdrs = glob(["Tests/Host/*.h"]),
+    sdk_frameworks = [
+        "CoreData",
+        "UIKit",
+    ],
+    tags = ["manual"],
 )
 
 objc_library(
@@ -714,10 +752,6 @@ objc_library(
         [
             "Tests/UnitTests/**/*.m",
             "Tests/UnitTests/**/*.mm",
-        ],
-        exclude = [
-            # TODO(b/155060426) Enable the KeysetHandle Tests.
-            "Tests/UnitTests/core/TINKKeysetHandleTest.mm",
         ],
     ),
     deps = [
