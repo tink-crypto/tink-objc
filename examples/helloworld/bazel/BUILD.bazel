@@ -1,0 +1,21 @@
+load(
+    "@rules_xcodeproj//xcodeproj:defs.bzl",
+    "top_level_target",
+    "xcodeproj",
+)
+
+licenses(["notice"])
+
+package(default_visibility = ["//:__subpackages__"])
+
+xcodeproj(
+    name = "xcodeproj",
+    project_name = "TinkHelloWorldApp",
+    tags = ["manual"],
+    top_level_targets = [
+        top_level_target(
+            "//helloworld:app",
+            target_environments = ["simulator"],
+        ),
+    ],
+)

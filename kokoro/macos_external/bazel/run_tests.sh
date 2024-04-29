@@ -28,5 +28,5 @@ if [[ -n "${KOKORO_ROOT:-}" ]]; then
   cd "${TINK_BASE_DIR}/tink_objc"
 fi
 
-"${BAZEL_CMD}" build -- //Tink/...
-"${BAZEL_CMD}" test --test_output=errors -- //Tink/...
+./kokoro/testutils/run_bazel_tests.sh .
+./kokoro/testutils/run_bazel_tests.sh "examples"

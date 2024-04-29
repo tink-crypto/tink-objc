@@ -1,21 +1,31 @@
-# Obj-C Hello World
+# Tink Obj-C Hello World
 
 This is an example iOS application that can encrypt and decrypt text using
-[AEAD (Authenticated Encryption with Associated Data)](../../../g3doc/PRIMITIVES.md#authenticated-encryption-with-associated-data).
+the [AEAD (Authenticated Encryption with Associated
+Data)](https://developers.google.com/tink/aead) primitive.
 
-It demonstrates the basic steps of using Tink, namely generating key material,
-obtaining a primitive, and using the primitive to do crypto.
+It demonstrates the basic steps of using Tink:
 
-The example comes with a Podfile that demonstrates how to install Tink from
-Cocoapods.
+*   generating key material
+*   obtaining a primitive
+*   using the primitive to do crypto
 
 ## Build and run
 
-### Cocoapods
+### CocoaPods
 
 ```shell
-git clone https://github.com/google/tink
-cd tink/objc/examples/helloworld
+git clone https://github.com/tink-crypto/tink-objc
+cd examples/helloworld
 pod install
 open TinkExampleApp.xcworkspace
+```
+
+### Bazel
+
+```shell
+git clone https://github.com/tink-crypto/tink-objc
+cd examples/helloworld
+bazelisk run //helloworld/bazel:xcodeproj
+open bazel/TinkExampleApp.xcodeproj
 ```

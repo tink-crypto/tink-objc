@@ -1,0 +1,44 @@
+load(
+    "@build_bazel_rules_apple//apple:ios.bzl",
+    "ios_application",
+    "ios_build_test",
+)
+
+licenses(["notice"])
+
+package(default_visibility = ["//:__subpackages__"])
+
+MINIMUM_IOS_VERSION = "12.0"
+
+ios_application(
+    name = "app",
+    bundle_id = "com.google.tink.objc.example",
+    families = ["iphone"],
+    infoplists = [":Info.plist"],
+    launch_storyboard = ":Base.lproj/LaunchScreen.storyboard",
+    minimum_os_version = MINIMUM_IOS_VERSION,
+    resources = glob(["Base.lproj/*.storyboard"]),
+    visibility = ["//visibility:public"],
+    deps = [":example"],
+)
+
+ios_build_test(
+    name = "example_build_test",
+    minimum_os_version = MINIMUM_IOS_VERSION,
+    targets = [
+        ":example",
+    ],
+)
+
+objc_library(
+    name = "example",
+    srcs = glob(["*.m"]),
+    hdrs = glob(["*.h"]),
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    tags = ["manual"],
+    deps = [
+        "@tink_objc//Tink:objc",
+    ],
+)
