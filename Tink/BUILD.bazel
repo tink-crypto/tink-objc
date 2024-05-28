@@ -759,8 +759,6 @@ objc_library(
         ":aead_internal",
         ":key_template",
         ":keyset_handle",
-        ":public_key_sign_internal",
-        ":public_key_verify_internal",
         ":testonly",
         "//Tink/proto_redirect:aes_gcm_cc_pb_redirect",
         "//Tink/proto_redirect:aes_siv_cc_pb_redirect",
