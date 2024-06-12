@@ -1,8 +1,9 @@
+load("@build_bazel_apple_support//rules:apple_genrule.bzl", "apple_genrule")
+load("@build_bazel_rules_apple//apple:apple.bzl", "apple_static_xcframework", "apple_xcframework")
 load(
     "@build_bazel_rules_apple//apple:ios.bzl",
     "ios_application",
     "ios_build_test",
-    "ios_static_framework",
     "ios_unit_test",
 )
 load("//:minimum_os.bzl", "IOS_MINIMUM_OS")
@@ -96,29 +97,54 @@ objc_library(
     deps = PUBLIC_API_DEPS,
 )
 
+PUBLIC_AND_UNSAFE_APIS = PUBLIC_APIS + [
+    "TINKKeysetHandle+Cleartext.h",
+]
+
+PUBLIC_AND_UNSAFE_API_DEPS = PUBLIC_API_DEPS + [
+    ":cleartext_keyset_handle",
+]
+
 objc_library(
     name = "testonly",
     testonly = 1,
-    hdrs = PUBLIC_APIS + [
-        "TINKKeysetHandle+Cleartext.h",
-    ],
+    hdrs = PUBLIC_AND_UNSAFE_APIS,
     visibility = ["//visibility:public"],
-    deps = PUBLIC_API_DEPS + [
-        ":cleartext_keyset_handle",
-    ],
+    deps = PUBLIC_AND_UNSAFE_API_DEPS,
 )
 
-ios_static_framework(
-    name = "Tink_framework",
-    hdrs = PUBLIC_APIS + [
-        "TINKKeysetHandle+Cleartext.h",
-    ],
+apple_static_xcframework(
+    name = "preprocessed_tink_static_xcframework",
     bundle_name = "Tink",
-    minimum_os_version = IOS_MINIMUM_OS,
-    deps = [
-        ":cleartext_keyset_handle",
-        ":objc",
-    ],
+    ios = {
+        "simulator": [
+            "x86_64",
+            "arm64",
+        ],
+        "device": [
+            "arm64",
+            "arm64e",
+        ],
+    },
+    minimum_os_versions = {
+        "ios": IOS_MINIMUM_OS,
+    },
+    public_hdrs = PUBLIC_AND_UNSAFE_APIS,
+    deps = PUBLIC_AND_UNSAFE_API_DEPS,
+)
+
+apple_genrule(
+    name = "Tink_static_xcframework",
+    srcs = [":preprocessed_tink_static_xcframework.xcframework.zip"],
+    outs = ["Tink.xcframework.zip"],
+    cmd = (
+        "INPUT=\"$(execpath :preprocessed_tink_static_xcframework.xcframework.zip)\" " +
+        "OUTPUT=\"$(OUTS)\" " +
+        "BUNDLE_NAME=\"Tink\" " +
+        "MINIMUM_IOS_VERSION=\"" + IOS_MINIMUM_OS + "\" " +
+        "\"$(execpath //tools/release:postprocess_xcframework)\""
+    ),
+    tools = ["//tools/release:postprocess_xcframework"],
 )
 
 ############################

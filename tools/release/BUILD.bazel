@@ -1,0 +1,8 @@
+package(default_visibility = ["//:__subpackages__"])
+
+licenses(["notice"])
+
+sh_binary(
+    name = "postprocess_xcframework",
+    srcs = ["postprocess_xcframework.sh"],
+)
