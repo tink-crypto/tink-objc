@@ -242,7 +242,6 @@ static Keyset *gKeyset;
   XCTAssertNotNil(keyTemplate);
   XCTAssertNil(error);
 
-  // TODO(candrian): Update this test as now C++ does support key templates.
   TINKKeysetHandle *handle =
       [[TINKKeysetHandle alloc] initWithKeyTemplate:keyTemplate error:&error];
   XCTAssertNotNil(handle);
