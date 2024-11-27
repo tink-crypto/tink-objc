@@ -25,7 +25,7 @@
 
 #include "absl/status/status.h"
 #include "absl/strings/string_view.h"
-#include "tink/json_keyset_reader.h"
+#include "tink/json/json_keyset_reader.h"
 #include "Tink/proto_redirect/tink_cc_pb_redirect.h"
 
 @implementation TINKJSONKeysetReader

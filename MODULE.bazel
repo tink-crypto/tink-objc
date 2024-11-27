@@ -10,23 +10,19 @@ bazel_dep(
     version = "1.15.1",
     repo_name = "build_bazel_apple_support",
 )
-
 bazel_dep(
     name = "rules_apple",
     version = "3.5.1",
     repo_name = "build_bazel_rules_apple",
 )
-
 bazel_dep(
     name = "rules_cc",
     version = "0.0.9",
 )
-
 bazel_dep(
     name = "tink_cc",
-    version = "2.2.0",
+    version = "2.3.0",
 )
-
 bazel_dep(
     name = "abseil-cpp",
     version = "20230802.1",

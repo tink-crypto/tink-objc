@@ -226,7 +226,7 @@ objc_library(
         "//Tink/util:strings",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",
-        "@tink_cc//tink:json_keyset_reader",
+        "@tink_cc//tink/json:json_keyset_reader",
     ],
 )
 
