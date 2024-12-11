@@ -190,6 +190,7 @@ objc_library(
     hdrs = [
         "TINKKeysetHandle+Cleartext.h",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "//Tink:keyset_handle",
         "//Tink:keyset_reader",
