@@ -40,6 +40,7 @@
 #include "tink/binary_keyset_reader.h"
 #include "tink/insecure_secret_key_access.h"
 #include "tink/proto_keyset_format.h"
+#include "tink/secret_data.h"
 #include "tink/util/secret_data.h"
 #include "tink/util/status.h"
 #include "tink/util/test_util.h"
@@ -49,7 +50,7 @@ using ::crypto::tink::InsecureSecretKeyAccess;
 using ::crypto::tink::SerializeKeysetToProtoKeysetFormat;
 using ::crypto::tink::test::AddRawKey;
 using ::crypto::tink::test::AddTinkKey;
-using ::crypto::tink::util::SecretData;
+using ::crypto::tink::SecretData;
 using ::crypto::tink::util::SecretDataAsStringView;
 using ::crypto::tink::util::StatusOr;
 using ::google::crypto::tink::EncryptedKeyset;
