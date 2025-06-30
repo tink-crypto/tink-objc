@@ -7,17 +7,17 @@ module(
 
 bazel_dep(
     name = "apple_support",
-    version = "1.15.1",
+    version = "1.22.0",
     repo_name = "build_bazel_apple_support",
 )
 bazel_dep(
     name = "rules_apple",
-    version = "3.5.1",
+    version = "3.22.0",
     repo_name = "build_bazel_rules_apple",
 )
 bazel_dep(
     name = "rules_cc",
-    version = "0.0.9",
+    version = "0.1.1",
 )
 bazel_dep(
     name = "tink_cc",
@@ -25,6 +25,6 @@ bazel_dep(
 )
 bazel_dep(
     name = "abseil-cpp",
-    version = "20230802.1",
+    version = "20250127.1",
     repo_name = "com_google_absl",
 )

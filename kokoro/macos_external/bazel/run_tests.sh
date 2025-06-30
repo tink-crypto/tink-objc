@@ -26,6 +26,10 @@ readonly BAZEL_CMD
 if [[ -n "${KOKORO_ROOT:-}" ]]; then
   readonly TINK_BASE_DIR="$(echo "${KOKORO_ARTIFACTS_DIR}"/git*)"
   cd "${TINK_BASE_DIR}/tink_objc"
+
+  # The most recent Xcode version available in both the x86 and arm environments.
+  sudo xcode-select -s "/Applications/Xcode_16.0.app"
+  xcodebuild -version
 fi
 
 ./kokoro/testutils/run_bazel_tests.sh .
