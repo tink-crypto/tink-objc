@@ -735,6 +735,7 @@ objc_library(
 ios_unit_test(
     name = "TinkTests",
     size = "large",
+    timeout = "eternal",
     minimum_os_version = IOS_MINIMUM_OS,
     runner = "@build_bazel_rules_apple//apple/testing/default_runner:ios_xctestrun_ordered_runner",
     test_host = "TinkUnitTestsHost",
