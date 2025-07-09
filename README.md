@@ -7,7 +7,7 @@
 
 
 **Test** | **macOS (Apple Silicon)**                               | **macOS (x86)**
--------- | ----------------------------------_-------------------- | ---------------
+-------- | ------------------------------------------------------- | ---------------
 Bazel    | [![Bazel_MacOsArm][tink_objc_bazel_badge_macos_arm]](#) | [![Bazel_MacOs][tink_objc_bazel_badge_macos]](#)
 
 
