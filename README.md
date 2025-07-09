@@ -3,10 +3,13 @@
 <!-- MacOS --->
 
 [tink_objc_bazel_badge_macos]: https://storage.googleapis.com/tink-kokoro-build-badges/tink-objc-bazel-macos-external.svg
+[tink_objc_bazel_badge_macos_arm]: https://storage.googleapis.com/tink-kokoro-build-badges/tink-objc-bazel-macos-external_arm.svg
 
-**Test**     |  **MacOS**
------------- | ---------
-Tink (Bazel) | [![Bazel_MacOs][tink_objc_bazel_badge_macos]](#)
+
+**Test** | **macOS (Apple Silicon)**                               | **macOS (x86)**
+-------- | ----------------------------------_-------------------- | ---------------
+Bazel    | [![Bazel_MacOsArm][tink_objc_bazel_badge_macos_arm]](#) | [![Bazel_MacOs][tink_objc_bazel_badge_macos]](#)
+
 
 Using crypto in your application [shouldn't have to][devs_are_users_too_slides]
 feel like juggling chainsaws in the dark. Tink is a crypto library written by a
