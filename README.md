@@ -1,4 +1,4 @@
-# Tink Objc
+# Tink Obj-C
 
 <!-- MacOS --->
 
