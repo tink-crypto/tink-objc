@@ -38,6 +38,7 @@
 #include "tink/binary_keyset_reader.h"
 #include "tink/binary_keyset_writer.h"
 #include "tink/cleartext_keyset_handle.h"
+#include "tink/config/global_registry.h"
 #include "tink/keyset_handle.h"
 #include "tink/util/status.h"
 #include "Tink/proto_redirect/tink_cc_pb_redirect.h"
@@ -330,7 +331,8 @@ static NSString *const kTinkService = @"com.google.crypto.tink";
 }
 
 - (instancetype)initWithKeyTemplate:(TINKKeyTemplate *)keyTemplate error:(NSError **)error {
-  auto st = crypto::tink::KeysetHandle::GenerateNew(*(keyTemplate.ccKeyTemplate));
+  auto st = crypto::tink::KeysetHandle::GenerateNew(*(keyTemplate.ccKeyTemplate),
+                                                    crypto::tink::KeyGenConfigGlobalRegistry());
   if (!st.ok()) {
     if (error) {
       *error = TINKStatusToError(st.status());
@@ -352,7 +354,7 @@ static NSString *const kTinkService = @"com.google.crypto.tink";
 + (nullable instancetype)publicKeysetHandleWithHandle:(TINKKeysetHandle *)aHandle
                                                 error:(NSError **)error {
   crypto::tink::KeysetHandle *ccKeysetHandle = aHandle.ccKeysetHandle;
-  auto status = ccKeysetHandle->GetPublicKeysetHandle();
+  auto status = ccKeysetHandle->GetPublicKeysetHandle(::crypto::tink::KeyGenConfigGlobalRegistry());
   if (!status.ok()) {
     if (error) {
       *error = TINKStatusToError(status.status());
