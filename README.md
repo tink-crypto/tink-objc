@@ -32,6 +32,17 @@ The official documentation is available at https://developers.google.com/tink.
 
 [devs_are_users_too_slides]: https://www.usenix.org/sites/default/files/conference/protected-files/hotsec15_slides_green.pdf
 
+## Tink Objective-C status
+
+Due to resource constraints, the Tink Objective-C library is being minimally
+maintained. We are not able to produce and distribute new CocoaPods. We are also
+currently unable to add new features. We do test Objective-C at head (see the
+badge above). In addition we will fix security bugs in source code.
+
+We recommend users to build Objective-C from source. While Tink can be used at
+head (and always is within Google), we will also occasionally tag releases on
+Github for reference.
+
 ## Contact and mailing list
 
 If you want to contribute, please read [CONTRIBUTING](docs/CONTRIBUTING.md) and
