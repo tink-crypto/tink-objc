@@ -14,6 +14,11 @@
 # limitations under the License.
 ################################################################################
 
+# Generated with openssl rand -hex 10
+echo "==========================================================================="
+echo "Tink Script ID: 6906b784f5463d645563 (to quickly find the script from logs)"
+echo "==========================================================================="
+
 set -euo pipefail
 
 BAZEL_CMD="bazel"
