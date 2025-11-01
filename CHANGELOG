@@ -14,7 +14,7 @@ Version 1.5.0
 ==================================
 Added support for accessGroups to TINKKeysetHandle.
 Removed unused C++ dependencies.
-Merged https://github.com/google/tink/pull/434: fixing nullability issues.
+Merged https://github.com/tink-crypto/tink/pull/434: fixing nullability issues.
 
 Version 1.4.0
 ==================================
