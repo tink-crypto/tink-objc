@@ -183,7 +183,7 @@ static NSString *const kTinkService = @"com.google.crypto.tink";
       return nil;
     }
 
-    NSData *keyset = (__bridge NSData *)dataTypeRef;
+    NSData *keyset = (__bridge_transfer NSData *)dataTypeRef;
     auto reader = crypto::tink::BinaryKeysetReader::New(absl::string_view(
         reinterpret_cast<const char *>(keyset.bytes), static_cast<size_t>(keyset.length)));
     if (!reader.ok()) {
