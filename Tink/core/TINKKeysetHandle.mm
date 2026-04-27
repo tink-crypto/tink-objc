@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Google Inc.
+ * Copyright 2017 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,8 +75,8 @@ static NSString *const kTinkService = @"com.google.crypto.tink";
   if (!st.ok()) {
     if (error) {
       *error = TINKStatusToError(st.status());
-      return nil;
     }
+    return nil;
   }
 
   return [self initWithCCKeysetHandle:std::move(st.value())];
@@ -119,8 +119,8 @@ static NSString *const kTinkService = @"com.google.crypto.tink";
   if (!st.ok()) {
     if (error) {
       *error = TINKStatusToError(st.status());
-      return nil;
     }
+    return nil;
   }
 
   return [self initWithCCKeysetHandle:std::move(st.value())];
@@ -197,8 +197,8 @@ static NSString *const kTinkService = @"com.google.crypto.tink";
     if (!read_result.ok()) {
       if (error) {
         *error = TINKStatusToError(read_result.status());
-        return nil;
       }
+      return nil;
     }
 
     return [self initWithCCKeysetHandle:std::move(read_result.value())];

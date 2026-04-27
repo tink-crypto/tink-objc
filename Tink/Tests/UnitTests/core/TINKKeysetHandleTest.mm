@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Google Inc.
+ * Copyright 2017 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -197,6 +197,35 @@ static Keyset *gKeyset;
   XCTAssertEqual((absl::StatusCode)error.code, absl::StatusCode::kInvalidArgument);
 }
 
+- (void)testWrongAead_BinaryWithErrorNil {
+  auto ccAead =
+      std::unique_ptr<crypto::tink::Aead>(new crypto::tink::test::DummyAead("dummy aead 42"));
+  TINKAeadInternal *aead = [[TINKAeadInternal alloc] initWithCCAead:std::move(ccAead)];
+
+  std::string serializedKeyset = gKeyset->SerializeAsString();
+  NSData *serializedKeysetData = [[NSData alloc] initWithBytes:serializedKeyset.data()
+                                                        length:serializedKeyset.size()];
+
+  NSData *keysetCiphertext = [aead encrypt:serializedKeysetData
+                        withAdditionalData:[NSData data]
+                                     error:nil];
+
+  EncryptedKeyset encryptedKeyset;
+  encryptedKeyset.set_encrypted_keyset(NSDataToTINKString(keysetCiphertext));
+
+  TINKBinaryKeysetReader *reader = [[TINKBinaryKeysetReader alloc]
+      initWithSerializedKeyset:TINKStringToNSData(encryptedKeyset.SerializeAsString())
+                         error:nil];
+
+  auto ccWrongAead =
+      std::unique_ptr<crypto::tink::Aead>(new crypto::tink::test::DummyAead("wrong aead"));
+  TINKAeadInternal *wrongAead = [[TINKAeadInternal alloc] initWithCCAead:std::move(ccWrongAead)];
+
+  TINKKeysetHandle *handle =
+      [[TINKKeysetHandle alloc] initWithKeysetReader:reader andKey:wrongAead error:nil];
+  XCTAssertNil(handle);
+}
+
 - (void)testNoKeysetInCiphertext_Binary {
   auto ccAead =
       std::unique_ptr<crypto::tink::Aead>(new crypto::tink::test::DummyAead("dummy aead 42"));
@@ -307,6 +336,12 @@ static Keyset *gKeyset;
   XCTAssertEqual((absl::StatusCode)error.code, absl::StatusCode::kInvalidArgument);
   XCTAssertTrue([error.localizedFailureReason
       containsString:@"Could not parse the input stream as a Keyset-proto."]);
+}
+
+- (void)testBadKeysetFromKeychainWithErrorNil {
+  TINKKeysetHandle *handle =
+      [[TINKKeysetHandle alloc] initFromKeychainWithName:kBadKeysetName error:nil];
+  XCTAssertNil(handle);
 }
 
 - (void)testUnknownKeysetFromKeychain {
@@ -492,6 +527,18 @@ static Keyset *gKeyset;
   XCTAssertEqual((absl::StatusCode)error.code, absl::StatusCode::kFailedPrecondition);
   XCTAssertTrue([error.localizedFailureReason
       containsString:@"Cannot create KeysetHandle with secret key material"]);
+}
+
+- (void)testReadNoSecretFailForTypeUnknownWithErrorNil {
+  auto keyset = std::make_unique<Keyset>();
+  Keyset::Key key;
+  AddTinkKey("some_key_type", 42, key, KeyStatusType::ENABLED, KeyData::UNKNOWN_KEYMATERIAL,
+             keyset.get());
+  keyset->set_primary_key_id(42);
+  NSData *serializedKeyset = TINKStringToNSData(keyset->SerializeAsString());
+  TINKKeysetHandle *handle = [[TINKKeysetHandle alloc] initWithNoSecretKeyset:serializedKeyset
+                                                                        error:nil];
+  XCTAssertNil(handle);
 }
 
 - (void)testReadNoSecretFailForTypeSymmetric {
