@@ -13,3 +13,10 @@ build --per_file_copt='.*\.mm\$@-std=c++17'
 # in project code.
 build --per_file_copt=external/.*@-w
 build --host_per_file_copt=external/.*@-w
+
+# Bazel 8/9 requires a registered test toolchain by default, which fails on Apple
+# platforms in this workspace because there is no default test toolchain registered
+# that targets iOS (tests are run on the macOS host via simulator instead).
+# Setting this to false falls back to the legacy behavior where tests are executed
+# without requiring a registered toolchain.
+build --@bazel_tools//tools/test:incompatible_use_default_test_toolchain=false

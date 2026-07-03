@@ -3,6 +3,7 @@ load(
     "ios_application",
     "ios_build_test",
 )
+load("@rules_cc//cc:objc_library.bzl", "objc_library")
 
 licenses(["notice"])
 
