@@ -31,16 +31,6 @@ NSError *TINKStatusToError(const crypto::tink::util::Status &status) {
   return [NSError errorWithDomain:kTinkErrorDomain code:(NSInteger)status.code() userInfo:userInfo];
 }
 
-#ifndef TINK_USE_ABSL_STATUS
-NSError *TINKError(crypto::tink::util::error::Code code, NSString *message) {
-  NSDictionary *userInfo = @{
-    NSLocalizedDescriptionKey : NSLocalizedString(@"Tink Error", nil),
-    NSLocalizedFailureReasonErrorKey : NSLocalizedString(message, nil),
-  };
-  return [NSError errorWithDomain:kTinkErrorDomain code:code userInfo:userInfo];
-}
-#endif
-
 NSError *TINKError(absl::StatusCode code, NSString *message) {
   NSDictionary *userInfo = @{
     NSLocalizedDescriptionKey : NSLocalizedString(@"Tink Error", nil),
