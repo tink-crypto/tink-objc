@@ -19,6 +19,7 @@
 #import "Tink/TINKKeysetHandle+Cleartext.h"
 
 #include "tink/cleartext_keyset_handle.h"
+#include "tink/binary_keyset_writer.h"
 
 #import "Tink/TINKKeysetHandle.h"
 #import "Tink/core/TINKKeysetHandle_Internal.h"
@@ -53,9 +54,17 @@
   return [[TINKKeysetHandle alloc] initWithCCKeysetHandle:std::move(st.value())];
 }
 
-- (NSData *)serializedKeyset {
-  auto keyset = crypto::tink::CleartextKeysetHandle::GetKeyset(*self.ccKeysetHandle);
-  return TINKStringToNSData(keyset.SerializeAsString());
+- (nullable NSData *)serializedKeyset {
+  std::stringbuf buffer;
+  auto writer = crypto::tink::BinaryKeysetWriter::New(std::make_unique<std::ostream>(&buffer));
+  if (!writer.ok()) {
+    return nil;
+  }
+  auto status = crypto::tink::CleartextKeysetHandle::Write(writer->get(), *self.ccKeysetHandle);
+  if (!status.ok()) {
+    return nil;
+  }
+  return TINKStringToNSData(buffer.str());
 }
 
 @end

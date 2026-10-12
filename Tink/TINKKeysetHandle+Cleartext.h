@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Returns the serialized Keyset-proto for this TINKKeysetHandle.
  */
-- (NSData *)serializedKeyset;
+- (nullable NSData *)serializedKeyset;
 
 @end
 

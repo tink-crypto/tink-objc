@@ -197,6 +197,7 @@ objc_library(
         "//Tink:keyset_reader",
         "//Tink/proto_redirect:tink_cc_pb_redirect",
         "//Tink/util:errors",
+        "@tink_cc//tink:binary_keyset_writer",
         "@tink_cc//tink:cleartext_keyset_handle",
     ],
 )
