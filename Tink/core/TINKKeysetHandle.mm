@@ -268,13 +268,20 @@ static NSString *const kTinkService = @"com.google.crypto.tink";
     return NO;
   }
 
-  auto keyset = crypto::tink::CleartextKeysetHandle::GetKeyset(*self.ccKeysetHandle);
-
-  std::string serializedKeyset;
-  if (!keyset.SerializeToString(&serializedKeyset)) {
+  std::stringbuf serializedKeyset;
+  auto writer =
+      crypto::tink::BinaryKeysetWriter::New(std::make_unique<std::ostream>(&serializedKeyset));
+  if (!writer.ok()) {
     if (error) {
-      *error = TINKStatusToError(crypto::tink::util::Status(
-          absl::StatusCode::kInternal, "Could not serialize C++ KeyTemplate."));
+      *error = TINKStatusToError(writer.status());
+    }
+    return NO;
+  }
+  auto writeStatus =
+      crypto::tink::CleartextKeysetHandle::Write(writer->get(), *self.ccKeysetHandle);
+  if (!writeStatus.ok()) {
+    if (error) {
+      *error = TINKStatusToError(writeStatus);
     }
     return NO;
   }
@@ -285,7 +292,7 @@ static NSString *const kTinkService = @"com.google.crypto.tink";
     }
   }
 
-  NSData *keysetData = TINKStringToNSData(serializedKeyset);
+  NSData *keysetData = TINKStringToNSData(serializedKeyset.str());
   NSDictionary *attributes = @{
     (__bridge id)kSecClass : (__bridge id)kSecClassGenericPassword,
     (__bridge id)kSecAttrAccount : keysetName,
