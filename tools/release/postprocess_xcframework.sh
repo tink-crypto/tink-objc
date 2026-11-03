@@ -30,6 +30,11 @@
 # XCode tooling. The results are placed into a ZIP archive in the file specified
 # by the OUTPUT environment variable.
 
+# Unique hex string of length 20
+echo "================================================================================"
+echo "Tink Script ID: 9f713d7a3c93f99673e2 (to quickly find the script from logs)"
+echo "================================================================================"
+
 set -x
 set -e
 set -u
